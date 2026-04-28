@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Andrea Anel Hurtado Molina ✦</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --pink: #ff3fa4;
+      --pink-light: #ff8ed4;
+      --pink-pale: #ffd6ec;
+      --pink-glow: rgba(255,63,164,0.25);
+      --black: #0a0a0a;
+      --dark: #111118;
+      --dark2: #1a1a26;
+      --dark3: #22222e;
+      --white: #fff8fc;
+      --gray: #aaa8b8;
+      --accent: #ff6eb4;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed; width: 18px; height: 18px;
+      background: var(--pink); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+      mix-blend-mode: screen;
+    }
+    .cursor-trail {
+      position: fixed; width: 38px; height: 38px;
+      border: 1.5px solid var(--pink-light);
+      border-radius: 50%; pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: left 0.12s ease, top 0.12s ease;
+      opacity: 0.5;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* Floating hearts */
+    .hearts-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .heart-particle {
+      position: absolute; font-size: 1rem; opacity: 0;
+      animation: floatHeart linear infinite;
+    }
+    @keyframes floatHeart {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.18; }
+      90%  { opacity: 0.1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,10,0.7);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,63,164,0.15);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-style: italic;
+      color: var(--pink-light);
+      letter-spacing: 0.04em;
+    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gray);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--pink); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      position: relative; text-align: center; padding: 8rem 2rem 4rem;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,63,164,0.22) 0%, transparent 70%);
+      border-radius: 50%; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      50%       { transform: translate(-50%, -50%) scale(1.15); opacity: 0.7; }
+    }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.25em; color: var(--pink);
+      text-transform: uppercase; margin-bottom: 1.4rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      font-weight: 900; line-height: 1.0;
+      background: linear-gradient(135deg, #fff8fc 0%, #ff8ed4 50%, #ff3fa4 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+    .hero-sub {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.6rem); color: var(--pink-light);
+      margin-top: 1rem;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+    .hero-desc {
+      max-width: 520px; margin: 1.8rem auto 0;
+      font-size: 0.95rem; color: var(--gray); line-height: 1.75;
+      animation: fadeUp 0.9s 0.45s ease both;
+    }
+    .hero-btns {
+      margin-top: 2.6rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.9s 0.6s ease both;
+    }
+    .btn-primary {
+      padding: 0.75rem 2rem;
+      background: var(--pink);
+      color: var(--black); font-weight: 700; font-size: 0.85rem;
+      border: none; border-radius: 50px; cursor: none;
+      text-decoration: none;
+      transition: box-shadow 0.3s, transform 0.2s;
+      box-shadow: 0 0 24px var(--pink-glow);
+    }
+    .btn-primary:hover { box-shadow: 0 0 40px rgba(255,63,164,0.6); transform: translateY(-2px); }
+    .btn-outline {
+      padding: 0.75rem 2rem;
+      background: transparent;
+      color: var(--pink-light); font-weight: 500; font-size: 0.85rem;
+      border: 1.5px solid var(--pink); border-radius: 50px;
+      cursor: none; text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-outline:hover { background: rgba(255,63,164,0.1); transform: translateY(-2px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.2em; color: var(--gray); text-transform: uppercase;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+    /* ─── SECTIONS ─── */
+    section { position: relative; z-index: 1; }
+
+    .section-wrap {
+      max-width: 1100px; margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.25em; color: var(--pink);
+      text-transform: uppercase; margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+      line-height: 1.1; margin-bottom: 1rem;
+    }
+    .section-title span { color: var(--pink); }
+    .section-desc { color: var(--gray); line-height: 1.8; max-width: 560px; }
+
+    /* divider */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,63,164,0.4), transparent);
+      margin: 0;
+    }
+
+    /* ─── GAMES ─── */
+    #games { background: var(--dark); }
+
+    .games-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .game-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,63,164,0.12);
+      border-radius: 16px; overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .game-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,63,164,0.5);
+      box-shadow: 0 12px 40px rgba(255,63,164,0.18);
+    }
+    .game-banner {
+      width: 100%; height: 150px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative; overflow: hidden;
+    }
+    .roblox-bg   { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+    .repo-bg     { background: linear-gradient(135deg, #1a0a10 0%, #2d1019 100%); }
+    .l4d2-bg     { background: linear-gradient(135deg, #0a1500 0%, #1a2b00 100%); }
+    .game-body { padding: 1.4rem; }
+    .game-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;
+    }
+    .game-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.25rem 0.7rem; border-radius: 50px;
+      background: rgba(255,63,164,0.12); color: var(--pink);
+      margin-bottom: 0.8rem;
+    }
+    .game-tag.occ { background: rgba(100,150,50,0.1); color: #8fba45; }
+    .game-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+    .meme-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--pink); color: var(--black);
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 4px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── BTS ─── */
+    #bts { background: var(--black); }
+
+    .bts-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center; margin-top: 3rem;
+    }
+    @media (max-width: 700px) { .bts-layout { grid-template-columns: 1fr; gap: 2rem; } }
+
+    .bts-members {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+    }
+    @media (max-width: 500px) { .bts-members { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; } }
+
+    .member-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,63,164,0.1);
+      border-radius: 12px; padding: 0.7rem 0.4rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .member-card:hover {
+      border-color: var(--pink);
+      box-shadow: 0 0 20px var(--pink-glow);
+      transform: scale(1.05);
+    }
+    .member-emoji { font-size: 1.6rem; display: block; margin-bottom: 0.3rem; }
+    .member-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem; letter-spacing: 0.06em;
+      color: var(--pink-light); text-transform: uppercase;
+    }
+
+    .bts-info { }
+    .bts-fact {
+      display: flex; gap: 1rem; align-items: flex-start;
+      margin-bottom: 1.4rem; padding: 1rem;
+      background: var(--dark2); border-radius: 12px;
+      border-left: 3px solid var(--pink);
+      transition: transform 0.2s;
+    }
+    .bts-fact:hover { transform: translateX(4px); }
+    .fact-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .fact-text { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+    .fact-text strong { color: var(--white); }
+
+    /* ─── ANIMALS ─── */
+    #animals { background: var(--dark); }
+
+    .animals-hero {
+      text-align: center; margin-top: 3rem;
+    }
+    .cat-spotlight {
+      display: inline-block; margin: 2rem auto;
+      background: linear-gradient(135deg, var(--dark2) 0%, #22112a 100%);
+      border: 2px solid var(--pink);
+      border-radius: 24px; padding: 2.5rem 3rem;
+      box-shadow: 0 0 60px rgba(255,63,164,0.2);
+      position: relative;
+    }
+    .cat-spotlight::before {
+      content: '✦ FAVORITA ✦';
+      position: absolute; top: -0.75rem; left: 50%; transform: translateX(-50%);
+      background: var(--pink); color: var(--black);
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.15em; padding: 0.2rem 1rem; border-radius: 50px;
+      font-weight: 700;
+    }
+    .cat-emoji { font-size: 5rem; display: block; margin-bottom: 0.5rem; }
+    .cat-text {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1.5rem; color: var(--pink-light);
+    }
+
+    .animals-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    @media (max-width: 600px) { .animals-grid { grid-template-columns: 1fr; } }
+    .animal-card {
+      background: var(--dark2); border-radius: 16px; padding: 1.8rem;
+      border: 1px solid rgba(255,63,164,0.1);
+      text-align: center; transition: all 0.3s;
+    }
+    .animal-card:hover { border-color: rgba(255,63,164,0.4); transform: translateY(-4px); }
+    .animal-card.special {
+      border-color: var(--pink); grid-column: span 1;
+      box-shadow: 0 0 30px rgba(255,63,164,0.15);
+    }
+    .animal-icon { font-size: 3.5rem; display: block; margin-bottom: 1rem; }
+    .animal-name {
+      font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.5rem;
+    }
+    .animal-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.65; }
+    .love-meter {
+      display: flex; justify-content: center; gap: 0.2rem; margin-top: 0.8rem;
+    }
+    .love-meter span { font-size: 1rem; }
+
+    /* ─── MEMES ─── */
+    #memes { background: var(--black); }
+
+    .memes-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem; margin-top: 3rem;
+    }
+    .meme-card {
+      background: var(--dark2); border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(255,63,164,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .meme-card:hover { transform: rotate(-1deg) scale(1.02); box-shadow: 0 8px 30px rgba(255,63,164,0.2); }
+    .meme-visual {
+      height: 130px; display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; background: var(--dark3);
+      border-bottom: 1px solid rgba(255,63,164,0.1);
+    }
+    .meme-body { padding: 1.2rem; }
+    .meme-title {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink);
+      margin-bottom: 0.5rem;
+    }
+    .meme-text { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+    .meme-reaction {
+      margin-top: 0.8rem; font-size: 0.78rem; color: var(--pink-light);
+      font-style: italic;
+    }
+
+    /* ─── QUOTE ─── */
+    #quote {
+      background: linear-gradient(135deg, #0d0010 0%, #100010 50%, #0a0a0a 100%);
+      position: relative; overflow: hidden;
+    }
+    #quote::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,63,164,0.15) 0%, transparent 65%);
+    }
+    .quote-wrap {
+      max-width: 800px; margin: 0 auto;
+      padding: 7rem 2rem; text-align: center;
+      position: relative;
+    }
+    .quote-deco {
+      font-size: 8rem; line-height: 1; color: var(--pink);
+      opacity: 0.15; font-family: 'Playfair Display', serif;
+      position: absolute; top: 3rem; left: 1rem;
+    }
+    .quote-text {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: clamp(1.5rem, 4vw, 2.8rem); font-weight: 400;
+      line-height: 1.45; color: var(--white);
+      position: relative; z-index: 1;
+    }
+    .quote-text em { color: var(--pink); font-style: normal; }
+    .quote-attr {
+      margin-top: 2rem;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray);
+    }
+    .quote-hearts { font-size: 1.2rem; margin-top: 1rem; }
+
+    /* ─── ROMANTIC DETAILS ─── */
+    .romantic-strip {
+      background: var(--dark2);
+      border-top: 1px solid rgba(255,63,164,0.1);
+      border-bottom: 1px solid rgba(255,63,164,0.1);
+      overflow: hidden; white-space: nowrap; padding: 0.9rem 0;
+    }
+    .strip-inner {
+      display: inline-block;
+      animation: marquee 22s linear infinite;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.15em; color: var(--pink-light);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,63,164,0.15);
+      padding: 3rem 2rem; text-align: center;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1.4rem; color: var(--pink-light); margin-bottom: 0.5rem;
+    }
+    .footer-sub {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.18em; color: var(--gray); text-transform: uppercase;
+    }
+
+    /* ─── REVEAL ANIMATION ─── */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .section-wrap { padding: 4rem 1.2rem; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- Floating Hearts -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Andrea Anel ✦</div>
+  <ul class="nav-links">
+    <li><a href="#games">Juegos</a></li>
+    <li><a href="#bts">BTS</a></li>
+    <li><a href="#animals">Animales</a></li>
+    <li><a href="#memes">Memes</a></li>
+    <li><a href="#quote">Frase</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div style="position:relative;z-index:1;">
+    <p class="hero-tag">✦ Representante ✦</p>
+    <h1 class="hero-title">Andrea Anel<br/>Hurtado Molina</h1>
+    <p class="hero-sub">Gamer · ARMY · Animal Lover · Soñadora</p>
+    <p class="hero-desc">
+      Una persona especial con gustos únicos: de los mundos virtuales al amor por los gatos,
+      de BTS a las aventuras cooperativas. Bienvenid@ a su pequeño universo rosa y negro. 🖤🩷
+    </p>
+    <div class="hero-btns">
+      <a href="#games" class="btn-primary">Explorar</a>
+      <a href="#quote" class="btn-outline">Ver la frase</a>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ Desliza para descubrir ↓</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MARQUEE STRIP -->
+<div class="romantic-strip">
+  <div class="strip-inner">
+    ✦ ROBLOX &nbsp;·&nbsp; R.E.P.O &nbsp;·&nbsp; LEFT 4 DEAD 2 &nbsp;·&nbsp; BTS &nbsp;·&nbsp; 보라해 &nbsp;·&nbsp; 🐱 GATOS &nbsp;·&nbsp; 🐕 PERROS &nbsp;·&nbsp; 🐔 GALLINAS &nbsp;·&nbsp; ARMY FOREVER &nbsp;·&nbsp; 💗 AMOR &nbsp;·&nbsp; ROBLOX &nbsp;·&nbsp; R.E.P.O &nbsp;·&nbsp; LEFT 4 DEAD 2 &nbsp;·&nbsp; BTS &nbsp;·&nbsp; 보라해 &nbsp;·&nbsp; 🐱 GATOS &nbsp;·&nbsp; 🐕 PERROS &nbsp;·&nbsp; 🐔 GALLINAS &nbsp;·&nbsp; ARMY FOREVER &nbsp;·&nbsp; 💗 AMOR &nbsp;·&nbsp;
+  </div>
+</div>
+
+<!-- GAMES -->
+<section id="games">
+  <div class="section-wrap">
+    <p class="section-label reveal">🎮 Universo Gamer</p>
+    <h2 class="section-title reveal">Juegos <span>Favoritos</span></h2>
+    <p class="section-desc reveal">Desde mundos creativos hasta survival cooperativo. Cada partida cuenta una historia diferente.</p>
+
+    <div class="games-grid">
+
+      <!-- Roblox -->
+      <div class="game-card reveal">
+        <div class="meme-badge">⭐ TOP</div>
+        <div class="game-banner roblox-bg">🟥</div>
+        <div class="game-body">
+          <div class="game-tag">Principal</div>
+          <h3 class="game-name">Roblox</h3>
+          <p class="game-desc">
+            El universo infinito de juegos donde la imaginación no tiene límites. Construir, explorar, sobrevivir o simplemente pasar el rato — en Roblox todo es posible. 🏗️
+          </p>
+          <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--pink-light);font-style:italic;">
+            "Si no has jugado Roblox, ¿en qué usas tu tiempo libre?" 💅
+          </p>
+        </div>
+      </div>
+
+      <!-- R.E.P.O -->
+      <div class="game-card reveal">
+        <div class="game-banner repo-bg">👻</div>
+        <div class="game-body">
+          <div class="game-tag">Principal</div>
+          <h3 class="game-name">R.E.P.O</h3>
+          <p class="game-desc">
+            El terror cooperativo más caótico. Recoger objetos paranormales mientras intentas no morir del susto (o de risa). La adrenalina + el squad = la combinación perfecta. 📦
+          </p>
+          <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--pink-light);font-style:italic;">
+            "¡AGÁRRALO! — *todos corren en dirección contraria*" 😭💀
+          </p>
+        </div>
+      </div>
+
+      <!-- Left 4 Dead 2 -->
+      <div class="game-card reveal">
+        <div class="game-banner l4d2-bg">🧟</div>
+        <div class="game-body">
+          <div class="game-tag occ">Ocasional</div>
+          <h3 class="game-name">Left 4 Dead 2</h3>
+          <p class="game-desc">
+            El clásico zombie shooter cooperativo. Cuando el grupo quiere algo más hardcore, L4D2 siempre responde. Teamwork o game over, así de simple. 🔫
+          </p>
+          <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--pink-light);font-style:italic;">
+            "Solo jugamos 'un ratito'... 3 horas después..." 🕐
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BTS -->
+<section id="bts">
+  <div class="section-wrap">
+    <p class="section-label reveal">💜 K-Pop</p>
+    <h2 class="section-title reveal">El grupo <span>BTS</span></h2>
+
+    <div class="bts-layout">
+
+      <div class="bts-info reveal">
+        <div class="bts-fact">
+          <span class="fact-icon">🏆</span>
+          <p class="fact-text"><strong>Bangtan Sonyeondan</strong> — el grupo surcoreano que conquistó el mundo. Desde 2013 rompiendo récords en Billboard, Grammy y el corazón de millones de ARMYs.</p>
+        </div>
+        <div class="bts-fact">
+          <span class="fact-icon">💜</span>
+          <p class="fact-text"><strong>보라해 (Borahae)</strong> — "Te quiero" en el idioma especial de BTS y sus fans. V inventó esta frase que ahora une a toda la fandom ARMY.</p>
+        </div>
+        <div class="bts-fact">
+          <span class="fact-icon">🎵</span>
+          <p class="fact-text"><strong>Dynamite, Butter, DNA, Boy With Luv</strong>... himnos que no salen de la cabeza. ¿Cuántas veces los habrás escuchado hoy?</p>
+        </div>
+        <div class="bts-fact">
+          <span class="fact-icon">✈️</span>
+          <p class="fact-text"><strong>ARMY</strong> — el ejército de fans más poderoso del mundo. Una familia global unida por la música y el amor a estos 7 chicos especiales.</p>
+        </div>
+      </div>
+
+      <div>
+        <p style="font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.15em;color:var(--pink);text-transform:uppercase;margin-bottom:1.2rem;" class="reveal">Los 7 miembros</p>
+        <div class="bts-members reveal">
+          <div class="member-card">
+            <span class="member-emoji">🐨</span>
+            <p class="member-name">RM</p>
+          </div>
+          <div class="member-card">
+            <span class="member-emoji">🐹</span>
+            <p class="member-name">Jin</p>
+          </div>
+          <div class="member-card">
+            <span class="member-emoji">🐱</span>
+            <p class="member-name">Suga</p>
+          </div>
+          <div class="member-card">
+            <span class="member-emoji">🐥</span>
+            <p class="member-name">J-Hope</p>
+          </div>
+          <div class="member-card">
+            <span class="member-emoji">🐯</span>
+            <p class="member-name">Jimin</p>
+          </div>
+          <div class="member-card">
+            <span class="member-emoji">🐻</span>
+            <p class="member-name">V</p>
+          </div>
+          <div class="member-card">
+            <span class="member-emoji">🐰</span>
+            <p class="member-name">Jungkook</p>
+          </div>
+          <div class="member-card" style="background:rgba(255,63,164,0.08);border-color:rgba(255,63,164,0.3);">
+            <span class="member-emoji">💜</span>
+            <p class="member-name">ARMY</p>
+          </div>
+        </div>
+        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:0.95rem;color:var(--gray);margin-top:1.5rem;line-height:1.7;" class="reveal">
+          "No matter where you are, what you do, who you are — 보라해." 💜
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ANIMALS -->
+<section id="animals">
+  <div class="section-wrap">
+    <p class="section-label reveal">🐾 Amor Animal</p>
+    <h2 class="section-title reveal">Los <span>Animales</span> del corazón</h2>
+    <p class="section-desc reveal">Porque los animales dan el amor más puro e incondicional que existe en este mundo.</p>
+
+    <div class="animals-hero reveal">
+      <div class="cat-spotlight">
+        <span class="cat-emoji">🐱</span>
+        <p class="cat-text">Los gatos son lo más importante</p>
+        <p style="font-size:0.82rem;color:var(--gray);margin-top:0.5rem;">Peludos, dramáticos, perfectos. 💕</p>
+      </div>
+    </div>
+
+    <div class="animals-grid">
+      <div class="animal-card special reveal">
+        <span class="animal-icon">🐱</span>
+        <h3 class="animal-name">Gatos</h3>
+        <p class="animal-desc">El favorito absoluto. Independientes, misteriosos y extremadamente adorables. Un gato en tu vida = felicidad garantizada.</p>
+        <div class="love-meter">
+          <span>🩷</span><span>🩷</span><span>🩷</span><span>🩷</span><span>🩷</span>
+        </div>
+      </div>
+      <div class="animal-card reveal">
+        <span class="animal-icon">🐕</span>
+        <h3 class="animal-name">Perros</h3>
+        <p class="animal-desc">Lealtad pura. El mejor amigo del ser humano, siempre feliz de verte sin importar cuánto tiempo hayas estado fuera.</p>
+        <div class="love-meter">
+          <span>🩷</span><span>🩷</span><span>🩷</span><span>🩷</span><span>🤍</span>
+        </div>
+      </div>
+      <div class="animal-card reveal">
+        <span class="animal-icon">🐔</span>
+        <h3 class="animal-name">Gallinas</h3>
+        <p class="animal-desc">Subestimadas pero encantadoras. Las gallinas tienen mucha más personalidad de lo que la gente cree. ¡Merecen amor también!</p>
+        <div class="love-meter">
+          <span>🩷</span><span>🩷</span><span>🩷</span><span>🤍</span><span>🤍</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEMES -->
+<section id="memes">
+  <div class="section-wrap">
+    <p class="section-label reveal">😭 Memes & Vibes</p>
+    <h2 class="section-title reveal">El <span>humor</span> que nos define</h2>
+    <p class="section-desc reveal">Porque la vida sin memes es demasiado seria. Aquí la realidad gamer + ARMY + amante de animales.</p>
+
+    <div class="memes-grid">
+      <div class="meme-card reveal">
+        <div class="meme-visual">🎮😤</div>
+        <div class="meme-body">
+          <p class="meme-title">Gamer mode ON</p>
+          <p class="meme-text">Cuando dices "solo una partida más" en Roblox y de repente son las 3am y mañana tienes cosas que hacer.</p>
+          <p class="meme-reaction">yo: adulta responsable / yo a las 2am: 🎮🔥</p>
+        </div>
+      </div>
+      <div class="meme-card reveal">
+        <div class="meme-visual">😱👻</div>
+        <div class="meme-body">
+          <p class="meme-title">R.E.P.O Experience</p>
+          <p class="meme-text">Entras confiada al mapa. Escuchas un ruido raro. El equipo desaparece. Tú: sola, con el objeto, y algo detrás.</p>
+          <p class="meme-reaction">squad: "tranquila no hay nada"... 💀💀💀</p>
+        </div>
+      </div>
+      <div class="meme-card reveal">
+        <div class="meme-visual">💜🎵</div>
+        <div class="meme-body">
+          <p class="meme-title">ARMY 24/7</p>
+          <p class="meme-text">Tú: voy a escuchar música random. El algoritmo: *pone Dynamite*. Tú ahora: cantando en coreano sin saberlo.</p>
+          <p class="meme-reaction">보라해 pero con todo el corazón 💜</p>
+        </div>
+      </div>
+      <div class="meme-card reveal">
+        <div class="meme-visual">🐱😭</div>
+        <div class="meme-body">
+          <p class="meme-title">Gato detectado</p>
+          <p class="meme-text">Ve un gato en la calle. Actividad principal del día cancelada. Misión: ganarse la confianza del minino a cualquier costo.</p>
+          <p class="meme-reaction">el gato: *se va*. yo: 💔💔💔</p>
+        </div>
+      </div>
+      <div class="meme-card reveal">
+        <div class="meme-visual">🧟‍♀️😂</div>
+        <div class="meme-body">
+          <p class="meme-title">Left 4 Dead 2</p>
+          <p class="meme-text">El equipo: "vamos juntos, somos un equipo". 5 segundos después: cada quien corriendo en dirección opuesta.</p>
+          <p class="meme-reaction">teamwork makes the dream work 😭✌️</p>
+        </div>
+      </div>
+      <div class="meme-card reveal">
+        <div class="meme-visual">🌹✨</div>
+        <div class="meme-body">
+          <p class="meme-title">Detalle romántico</p>
+          <p class="meme-text">El rosa y negro no son solo colores. Son un estado de ánimo: suave por fuera, fuerte por dentro. Delicada pero imparable. 🖤🩷</p>
+          <p class="meme-reaction">aesthetic + attitude = Andrea Anel 💅</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUOTE -->
+<section id="quote">
+  <div class="quote-wrap">
+    <span class="quote-deco">"</span>
+    <blockquote class="quote-text reveal">
+      Si crees que estás vencido, lo estás.<br/>
+      Si crees que no te atreves, no lo harás.<br/>
+      Si quieres ganar pero crees que no puedes,<br/>
+      es casi seguro que <em>no ganarás.</em><br/><br/>
+      Las batallas de la vida no siempre las gana<br/>
+      el más fuerte o el más veloz —<br/>
+      sino <em>quien cree que puede.</em>
+    </blockquote>
+    <p class="quote-attr reveal">— Reflexión para no rendirse nunca ✦</p>
+    <div class="quote-hearts reveal">🩷 🖤 🩷 🖤 🩷</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-name">Andrea Anel Hurtado Molina</p>
+  <p class="footer-sub" style="margin-top:0.4rem;">Gamer · ARMY · Cat Lover · Soñadora</p>
+  <p style="font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;color:rgba(170,168,184,0.4);margin-top:1.5rem;">
+    Hecho con 🩷 y mucho café · © 2025
+  </p>
+</footer>
+
+<script>
+  // ─── Custom Cursor ───
+  const cursor = document.getElementById('cursor');
+  const trail = document.getElementById('cursorTrail');
+  let mx = 0, my = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    setTimeout(() => {
+      trail.style.left = mx + 'px';
+      trail.style.top  = my + 'px';
+    }, 80);
+  });
+  document.querySelectorAll('a, button, .game-card, .member-card, .animal-card, .meme-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1.8)';
+      cursor.style.background = 'var(--pink-light)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      cursor.style.background = 'var(--pink)';
+    });
+  });
+
+  // ─── Floating Hearts ───
+  const heartsBg = document.getElementById('heartsBg');
+  const HEARTS = ['💗','💕','🩷','💓','✨','⭐','💫','🌸'];
+  for (let i = 0; i < 18; i++) {
+    const h = document.createElement('span');
+    h.className = 'heart-particle';
+    h.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = (12 + Math.random() * 20) + 's';
+    h.style.animationDelay = (Math.random() * 20) + 's';
+    h.style.fontSize = (0.7 + Math.random() * 1.1) + 'rem';
+    heartsBg.appendChild(h);
+  }
+
+  // ─── Scroll Reveal ───
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ─── Nav active link ───
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => {
+          a.style.color = a.getAttribute('href') === '#' + e.target.id
+            ? 'var(--pink)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => sectionObserver.observe(s));
+</script>
+</body>
+</html>
